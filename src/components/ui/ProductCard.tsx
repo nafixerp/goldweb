@@ -4,7 +4,8 @@ import { useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { motion } from 'framer-motion'
-import { Heart, Eye, ShoppingBag } from 'lucide-react'
+import { Heart, Eye, ShoppingBag, MessageCircle } from 'lucide-react'
+import { getProductInquiryMessage, openWhatsApp, trackWhatsAppClick } from '@/lib/whatsapp'
 
 interface ProductCardProps {
   id: string
@@ -35,6 +36,14 @@ export default function ProductCard({
 }: ProductCardProps) {
   const [isHovered, setIsHovered] = useState(false)
   const [isWishlisted, setIsWishlisted] = useState(false)
+
+  const handleWhatsAppInquiry = (e: React.MouseEvent) => {
+    e.preventDefault()
+    e.stopPropagation()
+    const message = getProductInquiryMessage({ name, price, id, category })
+    trackWhatsAppClick('product_inquiry', { product_id: id, product_name: name })
+    openWhatsApp(message)
+  }
 
   return (
     <motion.div
@@ -106,6 +115,15 @@ export default function ProductCard({
             <motion.button
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.9 }}
+              onClick={handleWhatsAppInquiry}
+              className="w-12 h-12 bg-green-500 rounded-full flex items-center justify-center shadow-lg"
+              aria-label="Inquire on WhatsApp"
+            >
+              <MessageCircle className="w-5 h-5 text-white" />
+            </motion.button>
+            <motion.button
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.9 }}
               className="w-12 h-12 bg-gold-500 rounded-full flex items-center justify-center shadow-lg"
               aria-label="Add to bag"
             >
@@ -140,6 +158,15 @@ export default function ProductCard({
             </span>
           )}
         </div>
+
+        {/* WhatsApp Inquiry Button */}
+        <button
+          onClick={handleWhatsAppInquiry}
+          className="mt-3 w-full flex items-center justify-center gap-2 py-2 bg-green-50 hover:bg-green-100 text-green-600 rounded-lg text-sm font-medium transition-colors"
+        >
+          <MessageCircle className="w-4 h-4" />
+          Inquire on WhatsApp
+        </button>
       </div>
     </motion.div>
   )

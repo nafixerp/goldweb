@@ -177,6 +177,17 @@ export default function Footer() {
                 </a>
               </li>
               <li className="flex items-center gap-3">
+                <MessageCircle className="w-5 h-5 text-green-500 flex-shrink-0" />
+                <a
+                  href="https://wa.me/919876543210?text=Hi!%20I%20would%20like%20to%20know%20more%20about%20your%20jewelry%20collection."
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-gray-400 hover:text-green-400 text-sm"
+                >
+                  WhatsApp Us
+                </a>
+              </li>
+              <li className="flex items-center gap-3">
                 <Mail className="w-5 h-5 text-gold-500 flex-shrink-0" />
                 <a href="mailto:info@sevensgold.com" className="text-gray-400 hover:text-gold-400 text-sm">
                   info@sevensgold.com
